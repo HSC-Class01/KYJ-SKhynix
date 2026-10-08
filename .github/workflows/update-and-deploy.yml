@@ -46,13 +46,13 @@ jobs:
           test -n "$DART_API_KEY" || { echo "::error::DART_API_KEY secret is missing."; exit 1; }
           test "${#DART_API_KEY}" -eq 40 || { echo "::error::DART_API_KEY must be 40 characters."; exit 1; }
       - name: Collect DART financial data
-        run: python scripts/update_data.py
+        run: python update_data.py
       - name: Validate collected data
         run: |
           test -s data/financial_metrics.csv || { echo "::error::financial_metrics.csv was not created."; exit 1; }
           python -c "import pandas as pd; d=pd.read_csv('data/financial_metrics.csv'); assert not d.empty, 'DART collection returned no financial rows'; print(f'Collected {len(d):,} financial rows across {d.year.nunique()} years.')"
       - name: Build dashboard
-        run: python scripts/build_dashboard.py
+        run: python build_dashboard.py
       - name: Commit updated data and dashboard
         shell: bash
         run: |
