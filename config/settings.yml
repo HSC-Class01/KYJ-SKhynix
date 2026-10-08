@@ -11,15 +11,18 @@ company:
     q3: "11014"
 
 documents:
-  download_original_reports: true
+  download_original_reports: false
 
 peers:
   - name: 삼성전자
     stock_code: "005930"
-    note: 메모리·시스템반도체를 포함하는 종합 반도체 기업
+    note: 가장 직접적인 국내 메모리 반도체 비교기업
   - name: DB하이텍
     stock_code: "000990"
-    note: 국내 파운드리·반도체 제조 기업
+    note: 국내 상장 반도체 제조·파운드리 비교기업
+  - name: SK실트론
+    stock_code: "비상장"
+    note: 반도체 웨이퍼 소재 기업
   - name: 한미반도체
     stock_code: "042700"
     note: 반도체 후공정 장비 기업
