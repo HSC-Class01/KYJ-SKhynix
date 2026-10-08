@@ -1,102 +1,63 @@
 # SK하이닉스 DART Financial Dashboard · 김예준
 
-[![Dashboard](assets/dashboard-badge.svg)](https://hsc-class01.github.io/KYJ-SKhynix/)
+[![대시보드 바로가기](assets/dashboard-badge.svg)](https://hsc-class01.github.io/KYJ-SKhynix/)
 
 ## 🔗 대시보드 바로가기
 
 [![대시보드 바로가기](assets/dashboard-badge.svg)](https://hsc-class01.github.io/KYJ-SKhynix/)
 
-한림성심대학교 간호학과 김예준의 SK하이닉스 기업분석 프로젝트입니다. OpenDART를 이용해 정기보고서의 주요 재무수치를 수집하고, 재무비율을 계산하여 GitHub Pages 대시보드로 시각화합니다.
-
-## 무엇을 자동화하나요?
-
-- SK하이닉스 연결재무제표(CFS) 수집
-- 사업보고서 / 반기보고서 / 1분기 / 3분기 재무수치 추출
-- DART 접수번호별 원문 공시파일 저장
-- 매출액·영업이익·순이익·자산·부채·자본·현금·재고·영업현금흐름 등 추출
-- 영업이익률·순이익률·ROE·ROA·부채비율·유동비율·총자산회전율 계산
-- Q2/Q3/Q4 standalone 수치 계산
-- GitHub Pages Dashboard 재생성
-- 매월 1일 GitHub Actions 자동 실행
-
-## 데이터 범위에 대한 중요한 사항
-
-프로젝트의 분석 타임라인은 2010년부터 시작하도록 설정했습니다. 다만 OpenDART의 **단일회사 주요계정 및 단일회사 전체 재무제표 API는 공식 개발가이드상 2015년 이후 사업연도를 대상으로 합니다.** 따라서 자동 구조화 재무수치 수집은 2015년부터 수행합니다.
-
-2010~2014년까지 동일한 시계열을 완성하려면 별도의 역사 데이터 백필이 필요합니다. 이를 위한 입력 위치는 `data/historical_backfill/`입니다.
-
-## API Key
-
-OpenDART에서 인증키를 발급한 후 GitHub Repository에서:
-
-`Settings → Secrets and variables → Actions → New repository secret`
-
-- Name: `DART_API_KEY`
-- Value: 40자리 OpenDART API 인증키
-
-API 키는 코드나 README에 직접 넣지 않습니다.
-
-## GitHub Actions 설치
-
-이 ZIP은 숨김 파일을 포함하지 않습니다. 따라서 `.github/workflows`가 자동으로 업로드되지 않습니다.
-
-`GITHUB_WORKFLOW/update-and-deploy.yml` 파일을 GitHub에서 다음 경로에 생성하세요.
-
-`.github/workflows/update-and-deploy.yml`
-
-자세한 순서는 `GITHUB_UPLOAD_GUIDE.md`를 참고하세요.
+SK하이닉스의 OpenDART 연결재무제표를 수집·정규화하고 Annual / Half-year / Quarterly 재무수치와 Figures를 GitHub Pages에서 제공하는 자동화 프로젝트입니다.
 
 ## Dashboard
 
-GitHub Pages 주소:
+- Figures: 매출액·영업이익·순이익 추세와 수익성 지표
+- Annual: 사업보고서 주요 재무수치
+- Half-year: 반기보고서 주요 재무수치
+- Quarterly: Q1~Q4 standalone 주요 재무수치
+- Peer Firms: 국내 반도체 산업 비교기업
 
-https://hsc-class01.github.io/KYJ-SKhynix/
+## 자동 업데이트
 
-Repository:
+GitHub Actions가 매월 1일 10:00 KST에 실행되며, 필요할 때는 workflow_dispatch로 수동 실행할 수 있습니다.
 
-https://github.com/HSC-Class01/KYJ-SKhynix
+OpenDART 구조화 재무 API는 2015년 이후 데이터를 대상으로 하므로 구조화 수치의 자동 수집은 2015년부터 시작합니다. 2010~2014년은 별도 historical backfill이 필요합니다.
 
-## Dashboard 구성
+### API Secret
 
-1. **Figures** — 매출·영업이익·순이익 추세, 수익성 그래프
-2. **Annual** — 사업보고서 주요 재무수치
-3. **Half-year** — 반기보고서 주요 재무수치
-4. **Quarterly** — Q1~Q4 standalone 주요 수치
-5. **Peer Firms** — 국내 반도체 산업 참고 기업
+GitHub Repository → Settings → Secrets and variables → Actions → New repository secret
+
+- Name: DART_API_KEY
+- Value: OpenDART 40자리 인증키
+
+API key는 코드와 README에 저장하지 않습니다.
 
 ## 국내 Peer Firms
 
 | 기업 | 종목코드 | 비교 맥락 |
 |---|---:|---|
-| 삼성전자 | 005930 | 메모리·시스템반도체를 포함하는 종합 반도체 기업 |
-| DB하이텍 | 000990 | 국내 파운드리·반도체 제조 기업 |
+| 삼성전자 | 005930 | 가장 직접적인 국내 메모리 반도체 비교기업 |
+| DB하이텍 | 000990 | 국내 상장 반도체 제조·파운드리 비교기업 |
+| SK실트론 | 비상장 | 반도체 웨이퍼 소재 기업 |
 | 한미반도체 | 042700 | 반도체 후공정 장비 기업 |
 | LX세미콘 | 108320 | 반도체 설계 기업 |
 
+Peer firms는 사업모델이 동일하다는 의미가 아니라, 국내 반도체 밸류체인과 경쟁환경을 비교하기 위한 참고기업입니다.
+
+## Repository / Dashboard
+
+- Repository: https://github.com/HSC-Class01/KYJ-SKhynix
+- Dashboard: https://hsc-class01.github.io/KYJ-SKhynix/
+
 ## 폴더 구조
 
-```text
 KYJ-SKhynix/
-├── agent/
-│   ├── dart_client.py
-│   ├── normalize.py
-│   └── pipeline.py
-├── assets/
-│   └── dashboard-badge.svg
-├── config/
-│   ├── metrics.yml
-│   └── settings.yml
-├── data/
-│   ├── historical_backfill/
-│   └── raw/
-├── docs/
-│   └── index.html
-├── GITHUB_WORKFLOW/
+├── .github/workflows/
 │   └── update-and-deploy.yml
+├── agent/
+├── assets/
+├── config/
+├── data/
+├── docs/
 ├── scripts/
-│   ├── build_dashboard.py
-│   └── update_data.py
-├── GITHUB_UPLOAD_GUIDE.md
 ├── README.md
 └── requirements.txt
-```
